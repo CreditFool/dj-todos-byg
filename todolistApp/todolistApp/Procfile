@@ -1,2 +1,0 @@
-web: gunicorn todolistApp.wsgi
-realese: python manage.py migrate

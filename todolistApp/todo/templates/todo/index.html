@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% load static %}
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Django ToDoList</title>
+    <link rel="stylesheet" href="node_modules/todomvc-common/base.css" />
+    <link rel="stylesheet" href="node_modules/todomvc-app-css/index.css" />
+    <link rel="stylesheet" href="{% static 'todo/css/index.css' %}" />
+  </head>
+  <body>
+    <section class="todoapp">
+      <header class="header">
+        <h1>ToDoList</h1>
+        <form method="POST" action="{% url 'create' %}">
+          {% csrf_token %}
+          <input class="new-todo" name="todoinput" placeholder="Apa yang akan kamu lakukan?" autofocus />
+        </form>
+      </header>
+      <section class="main">
+        <input id="toggle-all" class="toggle-all" type="checkbox" />
+        <label for="toggle-all">Mark all as complete</label>
+        <ul class="todo-list">
+          
+          {% if items %} {% for item in items %}
+          <li {% if item.status %}class="completed"{% endif %}>
+            <div class="view">
+              <form method="POST" action="{% url 'update' item.id %}">
+                {% csrf_token %}
+                <input class="toggle" name='status' onclick="this.form.submit()" type="checkbox" {% if item.status %}checked{% endif %} />
+                <label>{{ item.title }}</label>
+                <a href="{% url 'delete' item.id %}" class="destroy"></a>
+              </form>
+            </div>
+            <input class="edit" value="Create a TodoMVC template" />
+          </li>
+
+          {% endfor %} {% endif %}
+        </ul>
+      </section>
+      <footer class="footer">
+      
+        <ul class="filters">
+          <li>
+            <a {% if request.path == '/todo/' %} class="selected"{% endif %} href="{% url 'index' %}">All</a>
+          </li>
+          <li>
+            <a  {% if request.path == '/todo/done/' %}class="selected"{% endif %} href="{% url 'done' %}">Done</a>
+          </li>
+          <li>
+            <a  {% if request.path == '/todo/pending/' %}class="selected"{% endif %} href="{% url 'pending' %}">Pending</a>
+          </li>
+          <li>
+            <a href="{% url 'delete_all' %}">Delete All</a>
+          </li>
+        </ul>
+      </footer>
+    </section>
+    <footer class="info">
+      <p>Dev by Ghulam Muzafar</p>
+    </footer>
+    <script src="node_modules/todomvc-common/base.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>

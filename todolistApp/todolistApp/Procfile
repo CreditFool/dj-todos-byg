@@ -1,2 +1,2 @@
-web: python manage.py runserver
-release: python manage.py migrate
+web: python todolistApp/manage.py runserver
+release: python todolistApp/manage.py migrate

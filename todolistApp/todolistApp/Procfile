@@ -1,2 +1,2 @@
-web: gunicorn todolistApp.wsgi
-realese: python manage.py migrate
+web: python runserver.py
+release: python manage.py migrate

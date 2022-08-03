@@ -1,2 +1,1 @@
-web: python runserver.py
-release: python manage.py migrate
+web: gunicorn  todlistApp.wsgi --log-file
